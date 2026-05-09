@@ -119,13 +119,13 @@ Used SQL for aggregation and KPI preparation
 **📊 Business Impact**
 
 
-✔ Improved visibility into end-to-end logistics performance
+✔ Improved visibility into logistics performance across hubs, drivers, and routes
 
-✔ Faster identification of operational bottlenecks across hubs
+✔ Enabled faster identification of operational bottlenecks impacting delivery efficiency
 
-✔ Enabled KPI-driven decision-making for operations teams
+✔ Strengthened KPI-based decision-making for logistics operations teams
 
-✔ Provided foundation for predictive logistics optimization
+✔ Established foundation for predictive and data-driven route optimization
 
 
 **🧠 Tools & Technologies**
