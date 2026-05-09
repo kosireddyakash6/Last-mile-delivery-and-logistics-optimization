@@ -131,3 +131,8 @@ Used SQL for aggregation and KPI preparation
 **🧠 Tools & Technologies**
 
 Power BI | SQL | DAX | Power Query | Data Modeling | KPI Analytics
+
+
+**📌 Executive Insight:** 
+
+This project demonstrates how logistics data can be transformed into operational decisions that directly improve delivery efficiency, resource allocation, and demand management.
