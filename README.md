@@ -23,15 +23,19 @@ Enable KPI-driven operational decision-making
 
 
 **📊 Dataset Overview**
-Metric	Details
-Dataset	Logistics Delivery Dataset
-Records	28K+ Transactions
-Tools Used	Power BI, SQL, DAX, Power Query
-Data Model	Star Schema
-Views	Operations, Drivers, Vehicles, Hubs
+
+| Metric     | Details                             |
+| ---------- | ----------------------------------- |
+| Dataset    | Logistics Delivery Dataset          |
+| Records    | 28K+ Transactions                   |
+| Tools Used | Power BI, SQL, DAX, Power Query     |
+| Data Model | Star Schema                         |
+| Views      | Operations, Drivers, Vehicles, Hubs |
+
 
 
 **📈 Key KPIs**
+
 On-Time Delivery Rate
 Average Delivery Time
 Delay Rate by Hub
@@ -41,6 +45,7 @@ Monthly Delivery Trend
 
 
 **📊 Dashboard Features**
+
 Multi-page dashboard (Operations, Driver, Hub Analysis)
 Drill-down capability (Hub → Driver → Shipment level)
 Dynamic KPI tracking using DAX
@@ -49,6 +54,7 @@ Trend-based performance visualization
 
 
 **🧠 Data Modeling & Logic**
+
 Designed Star Schema model for scalable analytics
 Cleaned and transformed raw data using Power Query
 Built DAX measures for:
