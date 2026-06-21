@@ -41,7 +41,7 @@ I chose Star Schema because the fact table has 28,000 rows surrounded by dimensi
 
 The data came from **4 CSV files** requiring consolidation:
 
-* The **primary data source** was CSV files containing **Orders table with 28,000 delivery records**, **Hubs table with 6 hubs**, **Drivers table with 55 drivers**, and **Vehicles table with 50 vehicles**. The files were downloaded from Google Drive (free dataset provided by Data Tutorials channel).
+* The **primary data source** was CSV files containing **Orders table with 28,000 delivery records**, **Hubs table with 6 hubs**, **Drivers table with 55 drivers**, and **Vehicles table with 50 vehicles**.
 
 I performed **data cleaning and transformation in Power Query**:
 
