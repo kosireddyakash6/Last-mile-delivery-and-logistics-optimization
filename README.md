@@ -1,146 +1,172 @@
-Here is your formatted and structurally optimized **Customer Churn Analysis** content rewritten to match the exact elite engineering depth, professional structure, and formatting style of your logistics project.
+Here is the fully formatted content optimized for your GitHub Profile `README.md`. It incorporates your structural outline, technical data points, code blocks, and seamlessly maps the provided dashboard dashboard view files directly after their corresponding section descriptions.
 
 ---
 
-# **PROJECT: TELECOM CUSTOMER CHURN ANALYTICS (END-TO-END POWER BI PROJECT)**
+# **PROJECT: SWIFT ROOT LOGISTICS DASHBOARD (REAL-TIME POWER BI PROJECT)**
 
 ## **1. Business Problem Understanding**
 
-A leading telecommunications provider analyzed historical customer behavior records covering **7,043 subscribers** to diagnose and combat high customer attrition rates. The business was struggling with an overall **churn rate of 26.54%** (accounting for **1,869 lost customers**), directly threatening market share and reducing customer lifetime value (LTV).
+Swift Root Logistics is a **real-time logistics company** in the US dealing with **movement of goods from one place to another place** with right time, right person, right route, and right cost. They analyzed **28,000 delivery records** across **2 years from 2023 to 2024** and faced **5 critical business challenges**:
 
-The discovery phase identified **4 critical business friction points**:
+* **19% delivery delays** against an industry target of less than 15%, which impacts customer trust and SLA compliance.
+* **Hub overload** where Dallas Main Hub operates at **110% capacity** versus optimal 85%, causing bottlenecks and driver burnout.
+* **Driver performance variation** with top driver Jessica Lee at **92% on-time rate** and worst driver Trevor Smith at **68% on-time rate** with 24 delays, creating inconsistent service quality.
+* **Vehicle breakdowns** where Freliner M2 has **153 breakdowns** costing **5 million rupees annually** in maintenance costs.
+* **Report latency** where stakeholders wait **36-72 hours** for updated data instead of getting real-time insights.
 
-* **Contractual Instability:** High concentrations of churn are linked directly to short-term, month-to-month contracts where customer commitment is highly volatile.
-* **Service Friction vs. Premium Pricing:** Fiber optic internet users exhibit disproportionately frequent churn compared to DSL users, indicating a severe gap between premium billing charges and actual service satisfaction.
-* **Transactional Dropouts:** Customers utilizing manual payment methods, specifically **Electronic Checks**, present significantly higher churn velocities compared to automated streams.
-* **Onboarding Retainment Lag:** A severe vulnerability window exists during the early customer lifecycle, with the highest churn risk concentrated in subscribers with a **tenure of less than 1 year**.
-
-These attrition dynamics combined to yield an estimated **15–20% structural revenue loss** annually. The explicit objective of this project was to design a multi-page analytics framework to identify at-risk subscribers, uncover behavioral churn drivers, and deliver programmatic, data-driven customer retention mechanics.
+These issues result in **15-20% revenue loss** from customer churn and refund claims. The business goals were to optimize hub capacity utilization, manage driver performance, reduce delivery delays, track vehicle breakdowns, and provide real-time analytics dashboards with 4 fully functional dashboards.
 
 ---
 
 ## **2. Project Architecture & Data Modeling**
 
-I architected a centralized, high-performance data model deploying a clean **Star Schema** designed to optimize dimensional filtering and analytical query response times in Power BI:
+I designed a **5-table Star Schema architecture** following industry best practices for Power BI:
 
-* **Fact Table:** `Fact_Churn_Data` containing **7,043 rows** of customer account profiles and service configurations. Key granular elements include `CustomerID` (Primary Key), `Tenure_Months`, `Monthly_Charges`, `Total_Charges`, and the analytical target flag `Churn_Status`.
-* **Dimension Tables:** Outlying customer attribute matrices extracted and isolated to separate dim tables to maximize relational efficiency:
-* `Dim_Contracts`: Contains unique contract types (Month-to-Month, One Year, Two Year).
-* `Dim_Services`: Contains product offerings (Fiber Optic, DSL, Online Security, Tech Support).
-* `Dim_Payments`: Maps transaction methods (Electronic Check, Bank Transfer, Credit Card).
-* `Dim_Demographics`: Tracks structural cohort segmentation (Gender, Senior Citizen, Dependents).
+* The **fact table** is Orders with **28,000 rows** and **15 columns** containing transactional data like order ID (primary key), order date, actual delivery date, delay reason, is delayed flag, customer satisfaction score, and delivery time hours. The **primary key** is order ID which is unique.
+* The **dimension tables** include:
+* **Hubs** with 6 hubs containing hub name (primary key) and hub capacity
+* **Drivers** with 55-56 drivers containing driver ID (primary key), driver name, employment type, hire date, experience years, and driver rating
+* **Vehicles** with approximately 50 vehicles containing vehicle code (primary key), vehicle name, vehicle type, vehicle model, and status
+* **Date table** with 730 days for time intelligence covering 2 years and 12 months
 
 
 
-Relationships were mapped using **Many-to-One (`*:1`) Cardinality** pointing from the central Fact table out to the respective analytical dimensions. The **cross-filter direction was strictly configured as Single** to maintain unidirectional filtering, preventing downstream query ambiguity and eliminating calculation latency across the dataset.
+I established relationships where order ID links to driver ID, hub name, and vehicle name with **4 foreign key links**. The **cardinality** is many-to-one meaning multiple orders per driver but unique driver in dimension. The **cross-filter direction** is single meaning dimension filters fact but not bidirectional to avoid performance issues.
+
+I chose Star Schema because the fact table has 28,000 rows surrounded by dimensions which are small tables resulting in **optimal query performance**, **simple DAX**, and **fast filtering**. Instead of merging queries which would create $28,000 \times 30 = 840,000$ data points, I used relationships to keep data lightweight.
 
 ### **Data Model Diagram**
+<img width="1167" height="733" alt="Logistics_Data_model" src="https://github.com/user-attachments/assets/cde9c10d-5a8e-4d27-bb22-06e69935c58e" />
 
----<img width="1167" height="733" alt="Logistics_Data_model" src="https://github.com/user-attachments/assets/b57e8c11-b738-45ab-9214-af9b7892b65f" />
-
-
-
-
-
+---
 
 ## **3. Data Sources & ETL Pipeline**
 
-The core pipeline ingested raw data from disparate operational environments, utilizing **Python** and **Power Query (M Engine)** for heavy extraction, transformation, and structural loading:
+The data came from **4 CSV files** requiring consolidation:
 
-* **Ingestion Profile:** Consolidated localized database dumps containing information on customer services, demographic structures, and monthly billing cycles.
-* **Data Cleansing Logic (Python & Power Query):**
-* Handled structural nulls and type mismatched features (e.g., forcing `Total_Charges` from text to a clean fixed decimal number).
-* Cleansed duplicate entry profiles and filtered out top-row artifact headers.
-* Extracted conditional buckets to categorize tenure horizons into actionable operational groups (e.g., `Tenure < 1 Year`).
-* **Key Transformation:** Constructed programmatic logic where non-internet subscribers tracking ancillary services (like Online Security) were cleanly normalized to avoid bias flags inside advanced DAX arrays.
+* The **primary data source** was CSV files containing **Orders table with 28,000 delivery records**, **Hubs table with 6 hubs**, **Drivers table with 55 drivers**, and **Vehicles table with 50 vehicles**. The files were downloaded from Google Drive (free dataset provided by Data Tutorials channel).
 
+I performed **data cleaning and transformation in Power Query**:
 
+* Removed top 2-8 rows containing headers mixed with data.
+* Used first row as header for all tables.
+* Removed duplicate order IDs in Orders table.
+* Selected required columns: order ID, driver ID, hub name, vehicle name, order date, actual delivery date, delay reason, is delayed flag, customer satisfaction score, delivery time hours.
+* **Key transformation**: Created **delay reason groups** using IF logic where Is Delayed = TRUE provides delay reason, Is Delayed = FALSE has blank (intentional for on-time orders).
 
-The optimized ETL pipeline systematically processes the source tables into data structures in under **3 seconds**, creating a clean, production-ready dataset.
+The **ETL pipeline** runs smoothly: CSV ingestion $\rightarrow$ Power Query transformation $\rightarrow$ Data validation (duplicates/nulls check) $\rightarrow$ Data loading to Power BI dataset. The entire pipeline runs in **5 seconds** demonstrating efficient ETL processing.
 
 ---
 
 ## **4. Power BI Dashboard Design**
 
-I engineered a responsive dashboard application organized across distinct strategic domains to give executives immediate operational clarity:
+I designed **4 interactive dashboards** with comprehensive operational coverage:
 
-### **Page 1: Executive Overview Dashboard (Landing Page)**
+### **Page 1: Overview Dashboard (Landing Page)**
 
-* **4 High-Impact KPI Cards:** Total Customers (7,043), Churned Population (1,869), Avg Monthly Charges ($64.76), and Overall Churn Rate (**26.54%**).
-* **Core Layout Visuals:** A macro breakdown tracking contract type distributions against explicit churn rates, along with billing tier distributions utilizing interactive scatter plots.
-* **Interactive Tooling:** Incorporated active year/tenure slicers alongside dynamic tooltips showcasing demographic risk distributions directly on hover.
-  <img width="1343" height="748" alt="Logistics_Overview(page1)" src="https://github.com/user-attachments/assets/56874ea6-cdd9-44d1-800d-61214ba97c52" />
-
-
----
-
-### **Page 2: Service & Product Performance Analytics**
-
-* **Strategic Visualizations:** A comparative performance matrix isolating customer churn rates across Internet Service types (DSL vs. Fiber Optic), integrated with an adjacent analysis tracking ancillary feature adoptions (Tech Support, Online Security). Includes conditional color mapping alerting teams to low-satisfaction product groupings.
-<img width="1261" height="733" alt="Drivers Overview(Page2)" src="https://github.com/user-attachments/assets/4ed82374-b65c-4aa3-b097-c81d0e233c1c" />
+* **5 KPI cards**: Total Orders (12,000/month, 4.3% MoM growth), On-Time Rate (80.88%, -1% MoM vs 85% target), CSAT (84%, stable), Avg Delivery Time (18.5 hours, +4% MoM vs 15-hour target), Total Hubs (6).
+* **3 sections**: Hubs (order vs capacity bar chart, hub performance ranking), Drivers (experience vs ratings scatter plot, top 5 drivers with delays with tooltip), Vehicles (active/inactive pie chart, orders by vehicle model bar chart).
+* **Interactive features**: Year slicer (2023/2024), Month slicer (Jan-Dec), dynamic tooltips showing 7 delay reasons.
+<img width="1343" height="748" alt="Logistics_Overview(page1)" src="https://github.com/user-attachments/assets/48fa5a59-e390-4f08-8df2-8cd70d664300" />
 
 
 ---
 
-### **Page 3: Billing & Financial Cohort Analysis**
+### **Page 2: Driver Overview Dashboard**
 
-* **Operational Focus:** A dedicated payment matrix tracking churn velocity across payment channels (Electronic Check, Paper Check, Auto-Pay). Features an integrated line chart modeling the correlation between climbing `Monthly_Charges` thresholds and actual customer cancellation trends.
-<img width="1253" height="734" alt="Hubs_Overview(Page3)" src="https://github.com/user-attachments/assets/57632bbc-3e29-4def-9f25-b18bd093c5cf" />
+* **5 Key features**: Top 10 delayed drivers table, Experience vs ratings scatter plot, Dynamic driver profile (select driver $\rightarrow$ shows hire date, experience, deliveries, star rating dynamically), Monthly trend chart (orders/month and on-time rate for selected driver), Parameter selector (toggle between total orders and on-time rate).
+<img width="1261" height="733" alt="Drivers Overview(Page2)" src="https://github.com/user-attachments/assets/520de23f-caea-48a6-8cf9-170803166b3d" />
 
+---
+
+### **Page 3: Hub Overview Dashboard**
+
+* **4 Core charts**: Order processed vs capacity bar chart, Hub performance ranking by on-time rate, Daily processing time heatmap (Monday-Sunday across 6 hubs with red=slow 24hrs, green=fast 12hrs), Hub capacity utilization analysis.
+<img width="1253" height="734" alt="Hubs_Overview(Page3)" src="https://github.com/user-attachments/assets/961060c1-233e-4460-ba3b-99c2524e7666" />
+
+---
+
+### **Page 4: Vehicle Overview Dashboard**
+
+* **5 Analytics charts**: Active/inactive/maintenance vehicles pie chart, Total orders by vehicle model bar chart, Age vs breakdown scatter plot, Breakdowns by vehicle code table, Breakdowns by vehicle model table (Freliner M2 = 153 breakdowns highest).
+<img width="1260" height="733" alt="Vehicles_Overview(Page4)" src="https://github.com/user-attachments/assets/33f705d4-5c13-4ba4-9eff-a959ef22a070" />
 
 ---
 
 ## **5. KPIs & DAX Measures**
 
-I authored advanced, optimized DAX calculations to extract real-time KPI metrics and execute deep cohort evaluations across the telecom subscriber population:
+I created **advanced DAX calculations** for all KPIs using robust time intelligence logic:
 
-* **Total Subscriber Ingestion Count:**
-
-```dax
-Total Customers = COUNTROWS(Fact_Churn_Data)
-
-```
-
-* **Absolute Attrition Volume:**
+* **Total Orders with MoM Growth**:
 
 ```dax
-Churned Customers = CALCULATE(COUNTROWS(Fact_Churn_Data), Fact_Churn_Data[Churn_Status] = "Yes")
+Total Orders = COUNTROWS(Orders)
 
-```
-
-* **Enterprise Churn Rate Percentage:**
-
-```dax
-Churn Rate = 
+MoM Growth = 
 DIVIDE(
-    [Churned Customers], 
-    [Total Customers], 
+    COUNTROWS(Orders) - CALCULATE(COUNTROWS(Orders), PREVIOUSMONTH(Date[Date])), 
+    CALCULATE(COUNTROWS(Orders), PREVIOUSMONTH(Date[Date])), 
+    0
+)
+
+```
+
+* **On-Time Delivery Rate**:
+
+```dax
+On-Time Rate = 
+DIVIDE(
+    COUNTROWS(FILTER(Orders, Orders[Is On Time] = TRUE)), 
+    COUNTROWS(Orders), 
     0
 ) * 100
 
 ```
 
-* **Average Monthly Billing Footprint:**
+* **Customer Satisfaction Score (CSAT)**:
 
 ```dax
-Avg Monthly Charges = AVERAGE(Fact_Churn_Data[Monthly_Charges])
+CSAT = AVERAGE(Orders[Customer Satisfaction Score])
 
 ```
 
-* **Cohort Financial Penetration (High-Value Attrition):**
+* **Average Delivery Time**:
 
 ```dax
-High Value Churn Risk = 
-CALCULATE(
-    [Churned Customers], 
-    FILTER(Fact_Churn_Data, Fact_Churn_Data[Monthly_Charges] > 80)
-)
+Avg Delivery Time = AVERAGE(Orders[Delivery Time Hours])
 
 ```
 
-## **6. Business Insights & Recommendations**
+* **Hub Capacity Utilization**:
 
-1. **Mitigate Month-to-Month Exposure:** Subscriptions on month-to-month terms are highly unstable and drive the bulk of structural churn. **Action:** Launch proactive contract migration programs, offering targeted billing discounts or loyalty credits to incentivize transitions into stable 1-year or 2-year commitments.
-2. **Address Fiber Optic Service Friction:** Premium Fiber Optic users are leaving at a disproportionately high rate. **Action:** Form an engineering task force to audit fiber line delivery frameworks, fix regional latency issues, and couple high-value tiers with complimentary premium tech support channels.
-3. **Automate Transactional Workflows:** The manual Electronic Check payment option correlates strongly with elevated customer churn. **Action:** Incentivize the adoption of automated digital payment channels (Auto-Pay, Credit Card) by providing a one-time invoice credit, successfully reducing passive churn.
-4. **Target the First-Year Lifecycle:** Churn risk peaks sharply within a customer's first 12 months. **Action:** Deploy automated post-onboarding engagement workflows, checking in with new users at critical milestones (Months 1, 3, and 6) to resolve setup friction before it leads to cancellation.
+```dax
+Capacity Utilization = 
+DIVIDE(
+    COUNTROWS(Orders), 
+    SUM(Hubs[Hub Capacity]), 
+    0
+) * 100
+
+```
+
+* **Driver Performance Ranking**:
+
+```dax
+Driver Rank = RANKX(ALL(Drivers[Driver Name]), [On-Time Rate], DESC, DENSE)
+
+```
+
+* **Vehicle Breakdown Analysis**:
+
+```dax
+Breakdowns = COUNTROWS(FILTER(Orders, Orders[Delay Reason] = "Vehicle Breakdown"))
+
+```
+
+## **6 Business Insights & Recommendations**
+
+1. **On-Time Rate Deficit**: The overall rate stands at **80.88%** (a 4.12% gap vs the 85% target threshold). **Action:** Optimize regional routing frameworks and cut down operational queue bottlenecks.
+2. **Hub Redirection**: Hub B is unsustainably overloaded at **110% volume capacity**. **Action:** Implement balancing logic to re-route incoming load distributions systematically down to under-capacity hubs (e.g., Target Hub B down to 95%, Hub A up to 100%).
+3. **Hub Lag Mitigation**: Hub C shows a slow turnaround metric at **22 hours** (8 hours slower than Hub A). **Action:** Augment sorting shift crews at Hub C to stabilize operations at a 15-hour target ceiling.
+4. **Driver Mentorship**: Jessica Lee represents peak execution with a **92% metric**, whereas Trevor Smith registers a weak performance at **68%** with 24 individual lag instances. **Action:** Deploy targeted performance improvement programs using peer coaching models.
+5. **Fleet Modernization**: The Freightliner M2 sub-fleet recorded **153 unique breakdown indicators** driving up maintaining costs to 5M rupees. **Action:** Transition the model out of commission immediately to mitigate annual financial overhead. Focus expansion on the **Van asset variant** which handled **8,500 highly efficient operations**.
