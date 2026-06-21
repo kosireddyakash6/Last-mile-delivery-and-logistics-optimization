@@ -167,3 +167,6 @@ Breakdowns = COUNTROWS(FILTER(Orders, Orders[Delay Reason] = "Vehicle Breakdown"
 3. **Hub Lag Mitigation**: Hub C shows a slow turnaround metric at **22 hours** (8 hours slower than Hub A). **Action:** Augment sorting shift crews at Hub C to stabilize operations at a 15-hour target ceiling.
 4. **Driver Mentorship**: Jessica Lee represents peak execution with a **92% metric**, whereas Trevor Smith registers a weak performance at **68%** with 24 individual lag instances. **Action:** Deploy targeted performance improvement programs using peer coaching models.
 5. **Fleet Modernization**: The Freightliner M2 sub-fleet recorded **153 unique breakdown indicators** driving up maintaining costs to 5M rupees. **Action:** Transition the model out of commission immediately to mitigate annual financial overhead. Focus expansion on the **Van asset variant** which handled **8,500 highly efficient operations**.
+
+## **Author**
+Kosireddy Akash | Data Analyst | Python • SQL • Power BI Analytics
