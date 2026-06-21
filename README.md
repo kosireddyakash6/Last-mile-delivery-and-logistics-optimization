@@ -1,6 +1,3 @@
-Here is the fully formatted content optimized for your GitHub Profile `README.md`. It incorporates your structural outline, technical data points, code blocks, and seamlessly maps the provided dashboard dashboard view files directly after their corresponding section descriptions.
-
----
 
 # **PROJECT: SWIFT ROOT LOGISTICS DASHBOARD (REAL-TIME POWER BI PROJECT)**
 
