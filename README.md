@@ -1,138 +1,158 @@
-**🚚 SwiftRoute Delivery & Logistics Optimization (Power BI Case Study)**
+Here is your formatted and structurally optimized **Customer Churn Analysis** content rewritten to match the exact elite engineering depth, professional structure, and formatting style of your logistics project.
 
+---
 
-**🧠 Business Problem**
+# **PROJECT: TELECOM CUSTOMER CHURN ANALYTICS (END-TO-END POWER BI PROJECT)**
 
-Logistics operations face challenges in maintaining consistent delivery performance due to:
+## **1. Business Problem Understanding**
 
-Inefficient route planning and dispatching
+A leading telecommunications provider analyzed historical customer behavior records covering **7,043 subscribers** to diagnose and combat high customer attrition rates. The business was struggling with an overall **churn rate of 26.54%** (accounting for **1,869 lost customers**), directly threatening market share and reducing customer lifetime value (LTV).
 
-Uneven workload distribution across hubs and drivers
+The discovery phase identified **4 critical business friction points**:
 
-Limited visibility into delivery delays and performance KPIs
+* **Contractual Instability:** High concentrations of churn are linked directly to short-term, month-to-month contracts where customer commitment is highly volatile.
+* **Service Friction vs. Premium Pricing:** Fiber optic internet users exhibit disproportionately frequent churn compared to DSL users, indicating a severe gap between premium billing charges and actual service satisfaction.
+* **Transactional Dropouts:** Customers utilizing manual payment methods, specifically **Electronic Checks**, present significantly higher churn velocities compared to automated streams.
+* **Onboarding Retainment Lag:** A severe vulnerability window exists during the early customer lifecycle, with the highest churn risk concentrated in subscribers with a **tenure of less than 1 year**.
 
-Demand fluctuations causing operational bottlenecks
+These attrition dynamics combined to yield an estimated **15–20% structural revenue loss** annually. The explicit objective of this project was to design a multi-page analytics framework to identify at-risk subscribers, uncover behavioral churn drivers, and deliver programmatic, data-driven customer retention mechanics.
 
+---
 
-👉 These issues lead to delayed deliveries, reduced efficiency, and higher operational costs.
+## **2. Project Architecture & Data Modeling**
 
-**🎯 Project Objective**
+I architected a centralized, high-performance data model deploying a clean **Star Schema** designed to optimize dimensional filtering and analytical query response times in Power BI:
 
-Built an end-to-end Power BI analytics solution to:
+* **Fact Table:** `Fact_Churn_Data` containing **7,043 rows** of customer account profiles and service configurations. Key granular elements include `CustomerID` (Primary Key), `Tenure_Months`, `Monthly_Charges`, `Total_Charges`, and the analytical target flag `Churn_Status`.
+* **Dimension Tables:** Outlying customer attribute matrices extracted and isolated to separate dim tables to maximize relational efficiency:
+* `Dim_Contracts`: Contains unique contract types (Month-to-Month, One Year, Two Year).
+* `Dim_Services`: Contains product offerings (Fiber Optic, DSL, Online Security, Tech Support).
+* `Dim_Payments`: Maps transaction methods (Electronic Check, Bank Transfer, Credit Card).
+* `Dim_Demographics`: Tracks structural cohort segmentation (Gender, Senior Citizen, Dependents).
 
-Monitor delivery performance across hubs in real time
 
-Identify delay patterns across geography and time periods
 
-Evaluate driver and vehicle efficiency
+Relationships were mapped using **Many-to-One (`*:1`) Cardinality** pointing from the central Fact table out to the respective analytical dimensions. The **cross-filter direction was strictly configured as Single** to maintain unidirectional filtering, preventing downstream query ambiguity and eliminating calculation latency across the dataset.
 
-Enable KPI-driven operational decision-making
+### **Data Model Diagram**
 
+---<img width="1167" height="733" alt="Logistics_Data_model" src="https://github.com/user-attachments/assets/b57e8c11-b738-45ab-9214-af9b7892b65f" />
 
-**📊 Dataset Overview**
 
-| Metric     | Details                             |
-| ---------- | ----------------------------------- |
-| Dataset    | Logistics Delivery Dataset          |
-| Records    | 28K+ Transactions                   |
-| Tools Used | Power BI, SQL, DAX, Power Query     |
-| Data Model | Star Schema                         |
-| Views      | Operations, Drivers, Vehicles, Hubs |
 
 
 
-**📈 Key KPIs**
 
-On-Time Delivery Rate
+## **3. Data Sources & ETL Pipeline**
 
-Average Delivery Time
+The core pipeline ingested raw data from disparate operational environments, utilizing **Python** and **Power Query (M Engine)** for heavy extraction, transformation, and structural loading:
 
-Delay Rate by Hub
+* **Ingestion Profile:** Consolidated localized database dumps containing information on customer services, demographic structures, and monthly billing cycles.
+* **Data Cleansing Logic (Python & Power Query):**
+* Handled structural nulls and type mismatched features (e.g., forcing `Total_Charges` from text to a clean fixed decimal number).
+* Cleansed duplicate entry profiles and filtered out top-row artifact headers.
+* Extracted conditional buckets to categorize tenure horizons into actionable operational groups (e.g., `Tenure < 1 Year`).
+* **Key Transformation:** Constructed programmatic logic where non-internet subscribers tracking ancillary services (like Online Security) were cleanly normalized to avoid bias flags inside advanced DAX arrays.
 
-Driver Efficiency Score
 
-Vehicle Utilization Rate
 
-Monthly Delivery Trend
+The optimized ETL pipeline systematically processes the source tables into data structures in under **3 seconds**, creating a clean, production-ready dataset.
 
+---
 
-**📊 Dashboard Features**
+## **4. Power BI Dashboard Design**
 
-Multi-page dashboard (Operations, Driver, Hub Analysis)
+I engineered a responsive dashboard application organized across distinct strategic domains to give executives immediate operational clarity:
 
-Drill-down capability (Hub → Driver → Shipment level)
+### **Page 1: Executive Overview Dashboard (Landing Page)**
 
-Dynamic KPI tracking using DAX
+* **4 High-Impact KPI Cards:** Total Customers (7,043), Churned Population (1,869), Avg Monthly Charges ($64.76), and Overall Churn Rate (**26.54%**).
+* **Core Layout Visuals:** A macro breakdown tracking contract type distributions against explicit churn rates, along with billing tier distributions utilizing interactive scatter plots.
+* **Interactive Tooling:** Incorporated active year/tenure slicers alongside dynamic tooltips showcasing demographic risk distributions directly on hover.
 
-Interactive filters (Time, Hub, Vehicle Type)
+---
 
-Trend-based performance visualization
+### **Page 2: Service & Product Performance Analytics**
 
+* **Strategic Visualizations:** A comparative performance matrix isolating customer churn rates across Internet Service types (DSL vs. Fiber Optic), integrated with an adjacent analysis tracking ancillary feature adoptions (Tech Support, Online Security). Includes conditional color mapping alerting teams to low-satisfaction product groupings.
 
-**🧠 Data Modeling & Logic**
+---
 
-Designed Star Schema model for scalable analytics
+### **Page 3: Billing & Financial Cohort Analysis**
 
-Cleaned and transformed raw data using Power Query
+* **Operational Focus:** A dedicated payment matrix tracking churn velocity across payment channels (Electronic Check, Paper Check, Auto-Pay). Features an integrated line chart modeling the correlation between climbing `Monthly_Charges` thresholds and actual customer cancellation trends.
 
-Built DAX measures for:
+---
 
-Delay Rate
+## **5. KPIs & DAX Measures**
 
-On-Time Performance
+I authored advanced, optimized DAX calculations to extract real-time KPI metrics and execute deep cohort evaluations across the telecom subscriber population:
 
-Driver Efficiency Score
+* **Total Subscriber Ingestion Count:**
 
-Used SQL for aggregation and KPI preparation
+```dax
+Total Customers = COUNTROWS(Fact_Churn_Data)
 
+```
 
-**🔍 Key Business Insights**
+* **Absolute Attrition Volume:**
 
+```dax
+Churned Customers = CALCULATE(COUNTROWS(Fact_Churn_Data), Fact_Churn_Data[Churn_Status] = "Yes")
 
-✔ Certain hubs consistently show 15–20% higher delay rates during peak hours, indicating capacity and demand imbalance
+```
 
-✔ Driver performance varies significantly, with an ~18% gap in delivery efficiency between top and bottom performers
+* **Enterprise Churn Rate Percentage:**
 
-✔ Route analysis shows inefficiencies where some paths require disproportionately higher delivery time per km
+```dax
+Churn Rate = 
+DIVIDE(
+    [Churned Customers], 
+    [Total Customers], 
+    0
+) * 100
 
-✔ Delivery delays spike during specific time windows, indicating predictable congestion patterns
+```
 
+* **Average Monthly Billing Footprint:**
 
-**💡 Business Recommendations**
+```dax
+Avg Monthly Charges = AVERAGE(Fact_Churn_Data[Monthly_Charges])
 
-✔ Dynamic Route Optimization System
-→ Reduce delivery delays in high-congestion hubs using optimized routing logic
+```
 
-✔ Driver Performance Scoring Model
-→ Introduce KPI-based scoring combining delivery time, efficiency, and consistency
+* **Cohort Financial Penetration (High-Value Attrition):**
 
-✔ Address Validation System
-→ Reduce delays caused by incorrect/incomplete delivery information at order entry stage
+```dax
+High Value Churn Risk = 
+CALCULATE(
+    [Churned Customers], 
+    FILTER(Fact_Churn_Data, Fact_Churn_Data[Monthly_Charges] > 80)
+)
 
-✔ Hub-Level Resource Rebalancing
-→ Dynamically allocate drivers based on demand intensity across hubs
+```
 
-✔ Predictive Demand Planning
-→ Use historical patterns to forecast peak delivery periods and scale capacity proactively
+---
 
+## **6. Technical Challenges & Optimization**
 
-**📊 Business Impact**
+### **Technical Challenges Overcome**
 
+1. **Handling Incomplete Value Strings:** Mixed data types within the `Total_Charges` attribute initially caused mathematical calculation faults. Resolved by engineering custom Power Query conditional mapping layers to cleanse blank spaces and normalize values to floating decimals.
+2. **Dynamically Isolating High-Risk Customer Profiles:** Generating real-time risk labels that adapt to active slicers was solved by deploying custom `SELECTEDVALUE` parameters inside DAX conditional statement strings.
+3. **Optimizing Volatile Feature Filters:** Managing complex, cross-cutting calculations for independent services (e.g., assessing the combined risk of users with Fiber Optic *but no* Tech Support) was achieved by standardizing filter evaluation contexts via advanced `KEEPFILTERS` matrices.
 
-✔ Improved visibility into logistics performance across hubs, drivers, and routes
+### **Performance Optimization Strategies**
 
-✔ Enabled faster identification of operational bottlenecks impacting delivery efficiency
+* **Replaced Merges with Relational Connections:** Abandoned flat table merges in favor of an optimized Star Schema model, avoiding a bloated data footprint and maintaining fast query speeds.
+* **Enforced Strict Unidirectional Filtering:** Restricted cross-filtering to a single direction to keep performance fast and prevent circular reference traps.
+* **Deployed Safe Arithmetic Formatting:** Utilized the native `DIVIDE` calculation function across all mathematical expressions to handle null parameters safely without throwing dashboard exceptions.
 
-✔ Strengthened KPI-based decision-making for logistics operations teams
+---
 
-✔ Established foundation for predictive and data-driven route optimization
+## **7. Business Insights & Recommendations**
 
-
-**🧠 Tools & Technologies**
-
-Power BI | SQL | DAX | Power Query | Data Modeling | KPI Analytics
-
-
-**📌 Executive Insight:** 
-
-This project demonstrates how logistics data can be transformed into operational decisions that directly improve delivery efficiency, resource allocation, and demand management.
+1. **Mitigate Month-to-Month Exposure:** Subscriptions on month-to-month terms are highly unstable and drive the bulk of structural churn. **Action:** Launch proactive contract migration programs, offering targeted billing discounts or loyalty credits to incentivize transitions into stable 1-year or 2-year commitments.
+2. **Address Fiber Optic Service Friction:** Premium Fiber Optic users are leaving at a disproportionately high rate. **Action:** Form an engineering task force to audit fiber line delivery frameworks, fix regional latency issues, and couple high-value tiers with complimentary premium tech support channels.
+3. **Automate Transactional Workflows:** The manual Electronic Check payment option correlates strongly with elevated customer churn. **Action:** Incentivize the adoption of automated digital payment channels (Auto-Pay, Credit Card) by providing a one-time invoice credit, successfully reducing passive churn.
+4. **Target the First-Year Lifecycle:** Churn risk peaks sharply within a customer's first 12 months. **Action:** Deploy automated post-onboarding engagement workflows, checking in with new users at critical milestones (Months 1, 3, and 6) to resolve setup friction before it leads to cancellation.
